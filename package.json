@@ -10,11 +10,13 @@
     "lint-fix": "eslint --fix"
   },
   "dependencies": {
+    "@paystack/inline-js": "^2.22.8",
     "jose": "^6.2.0",
     "lucide-react": "^0.563.0",
     "next": "16.1.4",
     "react": "19.2.3",
     "react-dom": "19.2.3",
+    "stripe": "^21.0.1",
     "zod": "^4.3.6"
   },
   "devDependencies": {

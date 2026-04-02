@@ -42,8 +42,7 @@ export class RemoteSource{
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${authToken}`,
-                }, 
-                credentials: 'include'
+                }
             })
 
             if (!res.ok){

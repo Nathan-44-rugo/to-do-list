@@ -37,7 +37,8 @@ export default function ProductDetailsCard({ product }: ProductPar) {
                     className="object-contain p-4 hover:opacity-75 transition-opacity border rounded-lg size-full" 
                     src={product.images[currentImageIndex]} 
                     alt={`${product.name} - Image ${currentImageIndex + 1}`} 
-                    fill={true} 
+                    fill={true}
+                    sizes="50vw"
                     loading='eager'
                 />
 

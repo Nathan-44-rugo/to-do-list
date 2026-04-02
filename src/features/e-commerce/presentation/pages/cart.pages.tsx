@@ -33,7 +33,6 @@ export default function CartPage() {
             </div>
 
             <div className="flex flex-col lg:flex-row gap-8">
-                {/* Item list */}
                 <div className="flex flex-col gap-3 flex-1">
                     {items.map(item => (
                         <CartItemCard key={item.productId} item={item} />
@@ -46,8 +45,7 @@ export default function CartPage() {
                     </button>
                 </div>
 
-                {/* Order summary */}
-                <div className="lg:w-72 flex-shrink-0">
+                <div className="lg:w-72 shrink-0">
                     <div className="border border-gray-200 rounded-lg p-6 flex flex-col gap-4 sticky top-8">
                         <h2 className="text-base font-semibold text-gray-900">Order Summary</h2>
 
@@ -72,9 +70,12 @@ export default function CartPage() {
                             </div>
                         </div>
 
-                        <button className="w-full py-3 bg-red-800 text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors">
+                        <Link
+                            href="/choose-payment"
+                            className="w-full py-3 bg-red-800 text-white rounded-lg text-sm font-semibold hover:bg-red-700 transition-colors text-center block"
+                        >
                             Proceed to Checkout
-                        </button>
+                        </Link>
 
                         <Link
                             href="/products"

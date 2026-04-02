@@ -15,6 +15,7 @@ export default function CartItemCard({ item }: { item: CartItem }) {
                     src={item.thumbnail}
                     alt={item.name}
                     fill
+                    sizes="80px"
                     style={{ objectFit: 'contain' }}
                     className="p-1"
                 />

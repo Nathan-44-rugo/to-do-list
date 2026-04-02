@@ -3,7 +3,6 @@
 import { User } from "../../domain/entities/user.entities"; // ADJUST PATH
 import Image from "next/image"; 
 import { Mail, User as UserIcon } from 'lucide-react'; 
-import { useRouter } from "next/navigation";
 
 const DetailItem = ({ Icon, label, value }: { Icon: React.ElementType, label: string, value: string }) => (
     <div className="flex font-mono items-center p-3 bg-gray-50 rounded-lg border border-gray-100 shadow-sm">
@@ -16,7 +15,6 @@ const DetailItem = ({ Icon, label, value }: { Icon: React.ElementType, label: st
 );
 
 export default function ProfileCard({ user }: { user: User}) {
-    const { push } = useRouter()
     return (
         <div className="flex font-mono justify-center items-start min-h-screen w-full p-4 bg-gray-50">
             <div className="w-full max-w-lg bg-white shadow-2xl rounded-xl mt-10 overflow-hidden border border-gray-200">
@@ -27,7 +25,7 @@ export default function ProfileCard({ user }: { user: User}) {
                             alt={`${user.firstName} ${user.lastName}'s Profile Picture`} 
                             fill={true}
                             style={{objectFit: "cover"}}
-                            sizes="fill"
+                            sizes="128px"
                             loading="eager"
                         />
                     </div>
@@ -46,7 +44,7 @@ export default function ProfileCard({ user }: { user: User}) {
 
                 <div className="p-6 pt-0">
                     <button
-                        onClick={() => {push('/api/auth/logout')}}
+                        onClick={() => { window.location.href = '/api/auth/logout' }}
                         title='Logout' 
                         className='w-full py-3 border border-red-400 text-red-600 rounded-lg text-sm font-semibold bg-white hover:bg-red-50 hover:text-red-700 transition-colors shadow-sm'
                     >

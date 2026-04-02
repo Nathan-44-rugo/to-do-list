@@ -13,7 +13,7 @@ export default function ProductCard({product, viewDetails}: Params){
     return(
         <div className="flex flex-col h-full border border-gray-400 font-mono hover:shadow-xl transition-shadow duration-200">
             <div className='relative w-full h-70 flex bg-gray-100 overflow-hidden'>
-                <Image className="z-0 object-contain p-4 hover:opacity-75 transition-opacity" src={product.images[0]} alt={product.name} fill={true} loading='eager'/>
+                <Image className="z-0 object-contain p-4 hover:opacity-75 transition-opacity" src={product.images[0]} alt={product.name} fill={true} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" loading='eager'/>
             </div>
             <div className='flex flex-col flex-1 p-5 gap-4'>
                 <div className='grid grid-rows-1'>

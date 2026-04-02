@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react'
 import { Product } from '../../domain/entities/product.entities'
 import { CartItem } from '../../domain/entities/cart.entities'
 import { createCart, modifyCart } from '../../di/cart.modules'
@@ -17,8 +17,41 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | null>(null)
 
+const cartCookieKey = process.env.NEXT_PUBLIC_CART_COOKIE_KEY ?? 'karimasu-cart'
+const cookieMaxAge = 60 * 60 * 24 * 7 // 7 days
+
+function readCartCookie(): CartItem[] {
+    const match = document.cookie.match(
+        new RegExp('(?:^|; )' + cartCookieKey + '=([^;]*)')
+    )
+    if (!match) return []
+    try {
+        return JSON.parse(decodeURIComponent(match[1]))
+    } catch {
+        return []
+    }
+}
+
+function writeCartCookie(items: CartItem[]) {
+    document.cookie = `${cartCookieKey}=${encodeURIComponent(
+        JSON.stringify(items)
+    )}; path=/; max-age=${cookieMaxAge}; SameSite=Lax`
+}
+
 export function CartProvider({ children }: { children: ReactNode }) {
     const [items, setItems] = useState<CartItem[]>([])
+    const [isHydrated, setIsHydrated] = useState(false)
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setItems(readCartCookie())
+        setIsHydrated(true)
+    }, [])
+
+    useEffect(() => {
+        if (!isHydrated) return
+        writeCartCookie(items)
+    }, [items, isHydrated])
 
     const addToCart = (product: Product) => {
         setItems(prev => {
@@ -62,7 +95,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
         modifyCart.execute(1, [{ id: Number(productId), quantity }]).catch(console.error)
     }
 
-    const clearCart = () => setItems([])
+    const clearCart = () => {
+        writeCartCookie([])  // clear cookie immediately
+        setItems([])
+    }
 
     const totalItems = items.reduce((acc, item) => acc + item.quantity, 0)
     const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0)
